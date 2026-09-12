@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Anusha ❤️</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL APP LAYOUT --- */
+        body {
+            margin: 0; padding: 0;
+            background: #111; /* Dark background outside the app on desktop */
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Makes it look like a mobile app even on laptops */
+        #app-container {
+            width: 100vw; height: 100vh;
+            max-width: 420px; 
+            background: #fff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        @media (min-width: 421px) {
+            #app-container { border-radius: 20px; height: 90vh; }
+        }
+
+        /* --- SCREENS --- */
+        .screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.8s ease-in-out;
+            padding: 20px; box-sizing: border-box;
+            text-align: center;
+        }
+        .screen.active { opacity: 1; pointer-events: all; }
+
+        .prompt-text { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: #d81b60; margin-bottom: 10px; line-height: 1.2; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
+        .sub-prompt { font-size: 1.1rem; color: #555; font-weight: 600; margin-bottom: 30px; }
+        
+        .action-btn { background: #ff0844; color: #fff; border: none; padding: 15px 30px; font-size: 1.1rem; border-radius: 50px; font-weight: 700; cursor: pointer; box-shadow: 0 8px 20px rgba(255, 8, 68, 0.4); transition: transform 0.2s; margin-top: 20px; }
+        .action-btn:active { transform: scale(0.95); }
+
+        /* --- SCREEN 1: iMESSAGE UI --- */
+        .imessage { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .msg-time { font-size: 0.8rem; color: #8e8e93; text-align: center; margin-bottom: 10px; }
+        .msg-bubble { padding: 12px 18px; border-radius: 20px; max-width: 80%; font-size: 1rem; line-height: 1.4; animation: popIn 0.5s ease backwards; text-align: left; }
+        .msg-them { background: #e5e5ea; color: #000; align-self: flex-start; border-bottom-left-radius: 5px; }
+        .msg-me { background: #007aff; color: #fff; align-self: flex-end; border-bottom-right-radius: 5px; }
+        
+        @keyframes popIn {
+            0% { transform: scale(0.8) translateY(20px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
+        /* --- SCREEN 2: GIFT UNWRAP --- */
+        .gift-box { position: relative; width: 150px; height: 130px; background: #e74c3c; cursor: pointer; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); animation: shake 2s infinite ease-in-out; }
+        .gift-lid { position: absolute; top: -20px; left: -10px; width: 170px; height: 40px; background: #c0392b; border-radius: 5px; transition: all 0.6s ease; z-index: 2; }
+        .gift-ribbon-v { position: absolute; top: 0; left: 50%; width: 20px; height: 100%; background: #f1c40f; transform: translateX(-50%); }
+        .gift-ribbon-h { position: absolute; top: 50%; left: 0; width: 100%; height: 20px; background: #f1c40f; transform: translateY(-50%); }
+        .gift-box.opened { animation: none; pointer-events: none; }
+        .gift-box.opened .gift-lid { transform: translateY(-80px) rotate(15deg); opacity: 0; }
+        
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            5% { transform: rotate(5deg); }
+            10% { transform: rotate(-5deg); }
+            15% { transform: rotate(0deg); }
+        }
+
+        /* --- SCREEN 3: VIRTUAL CAKE --- */
+        .custom-cake { position: relative; width: 180px; height: 90px; background: #ff9a9e; border-radius: 10px; margin: 60px auto 30px auto; box-shadow: inset 0 -10px 0 rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .frosting { position: absolute; top: -15px; left: -10px; width: 200px; height: 40px; background: #fff; border-radius: 20px; box-shadow: 0 5px 0 #ffdae0; }
+        .candles-container { position: absolute; top: -55px; width: 100%; display: flex; justify-content: space-evenly; padding: 0 20px; }
+        .candle { width: 14px; height: 50px; background: repeating-linear-gradient(45deg, #fff, #fff 4px, #ff0844 4px, #ff0844 8px); border-radius: 3px; position: relative; cursor: pointer; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .flame { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 16px; height: 25px; background: #ff9800; border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%; box-shadow: 0 0 15px #ff9800, 0 0 30px #ffeb3b; animation: flicker 0.4s ease-in-out infinite alternate; display: none; }
+        
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(0.9) rotate(-3deg); }
+            100% { transform: translateX(-50%) scale(1.1) rotate(3deg); }
+        }
+
+        /* --- SCREEN 4: BALLOON POP --- */
+        .balloons-wrapper { display: flex; justify-content: space-around; width: 100%; margin-top: 20px; }
+        .balloon { width: 70px; height: 90px; background: #ff4757; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; position: relative; cursor: pointer; animation: floatBalloon 3s infinite ease-in-out alternate; box-shadow: inset -10px -10px 20px rgba(0,0,0,0.1); transition: transform 0.2s, opacity 0.2s; }
+        .balloon::before { content: ''; position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 12px solid #ff4757; }
+        .balloon::after { content: ''; position: absolute; bottom: -45px; left: 50%; transform: translateX(-50%); width: 2px; height: 45px; background: rgba(0,0,0,0.2); }
+        
+        .balloon:nth-child(2) { background: #3742fa; animation-delay: 0.5s; }
+        .balloon:nth-child(2)::before { border-bottom-color: #3742fa; }
+        .balloon:nth-child(3) { background: #2ed573; animation-delay: 1s; }
+        .balloon:nth-child(3)::before { border-bottom-color: #2ed573; }
+        
+        .balloon.popped { transform: scale(0); opacity: 0; pointer-events: none; }
+        
+        #balloon-message-box { background: rgba(255,255,255,0.9); padding: 15px; border-radius: 10px; margin-top: 40px; min-height: 80px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #d81b60; box-shadow: 0 5px 15px rgba(0,0,0,0.1); opacity: 0; transition: opacity 0.3s; }
+
+        @keyframes floatBalloon { 0% { transform: translateY(0); } 100% { transform: translateY(-20px); } }
+
+        /* --- SCREEN 5: POLAROID MEMORIES --- */
+        .polaroid-container { position: relative; width: 280px; height: 350px; margin: 0 auto; perspective: 1000px; }
+        .polaroid { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #fff; padding: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); border-radius: 5px; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; transform: scale(0.8) rotate(10deg); pointer-events: none; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .polaroid.active { opacity: 1; transform: scale(1) rotate(0deg); pointer-events: all; cursor: pointer; z-index: 3; }
+        .polaroid.prev { opacity: 0; transform: scale(1.2) rotate(-15deg) translateX(-100px); z-index: 1; pointer-events: none; }
+        .polaroid-img { width: 100%; height: 200px; background: #ffe6ea; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; font-size: 4rem; border-radius: 5px; }
+        .polaroid-caption { font-weight: 700; color: #d81b60; font-size: 1.1rem; }
+        .polaroid-caption span { display: block; font-weight: 500; color: #555; font-size: 0.9rem; margin-top: 5px; line-height: 1.4; }
+
+        /* --- SCREEN 6: HANDWRITTEN LETTER --- */
+        .paper { background: #fffdf5; padding: 30px 20px; border-radius: 5px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); width: 95%; max-height: 85vh; overflow-y: auto; text-align: left; position: relative; }
+        .paper::before { content: ''; position: absolute; top: 0; left: 20px; bottom: 0; width: 2px; background: rgba(255, 0, 0, 0.2); }
+        .cursive { font-family: 'Dancing Script', cursive; color: #8b1031; font-size: 2.2rem; margin-bottom: 15px; margin-left: 15px; }
+        .signature { font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #8b1031; text-align: right; margin-top: 20px; }
+        .paper p { margin-bottom: 15px; font-size: 0.95rem; line-height: 1.6; padding-left: 20px; color: #333; }
+        .shayari { font-style: italic; color: #591024; font-weight: 600; padding: 15px !important; background: rgba(255, 8, 68, 0.05); border-radius: 10px; text-align: center; border-left: 4px solid #8b1031; }
+
+        /* Confetti */
+        .confetti { position: absolute; width: 10px; height: 10px; z-index: 100; animation: explode 1.5s forwards cubic-bezier(0.1, 0.8, 0.1, 1); }
+        @keyframes explode { 0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; } 100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(720deg); opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <!-- Upload 'song1.mp3' to your repository! -->
+    <audio id="bg-music" loop>
+        <source src="song1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="app-container">
+        
+        <!-- SCREEN 1: iMessage -->
+        <div class="screen active" id="screen-1" style="background: #f4f4f8;">
+            <div class="imessage">
+                <p class="msg-time">August 10th</p>
+                <div class="msg-bubble msg-them" style="animation-delay: 0.5s">Hey Anusha...</div>
+                <div class="msg-bubble msg-them" style="animation-delay: 1.5s">I know things aren't exactly how they used to be between us.</div>
+                <div class="msg-bubble msg-them" style="animation-delay: 3.0s">But the calendar says it's your birthday...</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 4.5s">And there's absolutely no way I'd ever forget today.</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 5.5s">I made a little something for you.</div>
+                
+                <button class="action-btn" style="animation: popIn 0.5s ease backwards; animation-delay: 7s; align-self: center;" onclick="startExperience()">
+                    Tap to open surprise 🎁
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: Gift Box -->
+        <div class="screen" id="screen-2" style="background: #ffdae0;">
+            <h2 class="prompt-text">Who said gifts need to be expensive?</h2>
+            <p class="sub-prompt">Tap the box to open your digital gift!</p>
+            
+            <div class="gift-box" id="gift" onclick="unwrapGift()">
+                <div class="gift-lid">
+                    <div style="position:absolute; top:0; left:50%; width:20px; height:100%; background:#f1c40f; transform:translateX(-50%);"></div>
+                </div>
+                <div class="gift-ribbon-v"></div>
+                <div class="gift-ribbon-h"></div>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: Virtual Cake -->
+        <div class="screen" id="screen-3" style="background: #ffe2c8;">
+            <h2 class="prompt-text">A little virtual celebration 🎂</h2>
+            <p class="sub-prompt" id="cake-instruction">Tap the candles to light them up!</p>
+            
+            <div class="custom-cake" id="interactive-cake">
+                <div class="frosting"></div>
+                <div class="candles-container">
+                    <div class="candle unlit" onclick="lightCandle(this)"><div class="flame"></div></div>
+                    <div class="candle unlit" onclick="lightCandle(this)"><div class="flame"></div></div>
+                    <div class="candle unlit" onclick="lightCandle(this)"><div class="flame"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 4: Balloon Pop -->
+        <div class="screen" id="screen-4" style="background: #e6d4ff;">
+            <h2 class="prompt-text">Pop the balloons to see what I love about us 🎈</h2>
+            
+            <div class="balloons-wrapper">
+                <div class="balloon" onclick="popBalloon(this, 'Are you a dictionary? Because you add meaning to my life. 🤭')"></div>
+                <div class="balloon" onclick="popBalloon(this, 'Punjabi Munda + Telugu Ammayi = The greatest crossover ever. 🎬')"></div>
+                <div class="balloon" onclick="popBalloon(this, '5 Years of fighting, loving, and a spark that just won\'t fade. ✨')"></div>
+            </div>
+            
+            <div id="balloon-message-box">Tap a balloon!</div>
+            <button class="action-btn" id="balloon-next-btn" style="display:none; margin-top:30px;" onclick="nextScreen()">Memory Lane 📸</button>
+        </div>
+
+        <!-- SCREEN 5: Polaroids -->
+        <div class="screen" id="screen-5" style="background: #ffc4d9;">
+            <h2 class="prompt-text">Memory Lane 📸</h2>
+            <p class="sub-prompt">Tap the photo to flip</p>
+
+            <div class="polaroid-container" onclick="nextPhoto()">
+                <div class="polaroid active" data-id="1">
+                    <div class="polaroid-img">📱</div>
+                    <div class="polaroid-caption">Chapter 1: The DMs<br><span>Who knew a random Instagram notification would turn into my favorite habit?</span></div>
+                </div>
+                <div class="polaroid" data-id="2">
+                    <div class="polaroid-img">🌶️</div>
+                    <div class="polaroid-caption">Chapter 2: Two Worlds<br><span>You teaching me Telugu, me being a typical Punjabi... absolute chaos, but I loved every second.</span></div>
+                </div>
+                <div class="polaroid" data-id="3">
+                    <div class="polaroid-img">⚡</div>
+                    <div class="polaroid-caption">Chapter 3: The Spark<br><span>Things changed between us, but that magnetic pull? It still stands incredibly tall.</span></div>
+                </div>
+                <div class="polaroid" data-id="4" style="background: transparent; box-shadow: none;">
+                    <button class="action-btn" style="pointer-events: all; width: 100%;" onclick="event.stopPropagation(); nextScreen()">Read my letter 💌</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 6: Handwritten Letter -->
+        <div class="screen" id="screen-6" style="background: #8b1031;">
+            <div class="paper">
+                <h2 class="cursive">My Dearest Anusha,</h2>
+                <p>Five years ago, a simple Instagram DM led to the most beautiful chapter of my life. A Punjabi Munda and a Telugu Ammayi—we were two completely different worlds that collided to create something magical.</p>
+                <p>We loved passionately, we fought stubbornly, we expressed freely, and we confessed deeply. Yes, we might not be exactly where we used to be right now, but let me be completely honest...</p>
+                <p>That spark? That insane chemistry and interest we have in each other? It still stands tall. It never left.</p>
+                
+                <p class="shayari">
+                    Faasle zaroor hain, magar dooriyan nahi,<br>
+                    Baat utni nahi hoti, par fikar adhuri nahi.<br>
+                    Chahe waqt badla ho, ya badle ho halaat,<br>
+                    Par tere bina, meri koi kahani poori nahi.
+                </p>
+
+                <p>Distance and time have only shown me that no matter what, you will always be an irreplaceable part of my heart. My feelings for you haven't faded—if anything, they have only deepened.</p>
+                <p>Happy Birthday on this beautiful 10th of August. May you always smile exactly the way you did when we first met. Let's see what the universe has planned for us next. 🌌</p>
+                
+                <p class="signature">- Your Punjabi Munda ❤️</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+        // Start App & Audio
+        function startExperience() {
+            document.getElementById('bg-music').play().catch(e => console.log('Audio blocked', e));
+            nextScreen();
+        }
+
+        // Screen Transition
+        function nextScreen() {
+            document.getElementById(`screen-${currentStep}`).classList.remove('active');
+            currentStep++;
+            const nextEl = document.getElementById(`screen-${currentStep}`);
+            if(nextEl) {
+                nextEl.classList.add('active');
+            }
+        }
+
+        // Gift Unwrapping
+        function unwrapGift() {
+            const gift = document.getElementById('gift');
+            if(gift.classList.contains('opened')) return;
+            
+            gift.classList.add('opened');
+            fireConfetti();
+            
+            // Auto transition after opening gift
+            setTimeout(() => {
+                nextScreen();
+            }, 2500);
+        }
+
+        // Cake Logic
+        let litCandles = 0;
+        let cakeBlown = false;
+        
+        function lightCandle(el) {
+            if(!el.classList.contains('unlit') || cakeBlown) return;
+            
+            el.classList.remove('unlit');
+            el.querySelector('.flame').style.display = 'block';
+            litCandles++;
+            
+            if(litCandles === 3) {
+                const instruction = document.getElementById('cake-instruction');
+                instruction.innerText = "Make a wish & tap the cake to blow them out! 💨";
+                instruction.style.color = "#d81b60";
+                
+                document.getElementById('interactive-cake').setAttribute('onclick', 'blowCandles()');
+            }
+        }
+
+        function blowCandles() {
+            if(litCandles < 3 || cakeBlown) return;
+            cakeBlown = true;
+            
+            document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
+            fireConfetti();
+            document.getElementById('cake-instruction').innerText = "Yayyy! 🎉";
+            
+            setTimeout(() => {
+                nextScreen();
+            }, 2500);
+        }
+
+        // Balloon Logic
+        let poppedBalloons = 0;
+        function popBalloon(el, msg) {
+            if(el.classList.contains('popped')) return;
+            
+            el.classList.add('popped');
+            
+            const msgBox = document.getElementById('balloon-message-box');
+            msgBox.innerText = msg;
+            msgBox.style.opacity = 1;
+            
+            poppedBalloons++;
+            
+            if(poppedBalloons === 3) {
+                setTimeout(() => {
+                    document.getElementById('balloon-next-btn').style.display = 'block';
+                }, 1000);
+            }
+        }
+
+        // Polaroid Logic
+        let currentPhoto = 1;
+        function nextPhoto() {
+            const active = document.querySelector(`.polaroid[data-id="${currentPhoto}"]`);
+            if(!active) return;
+            
+            active.classList.remove('active');
+            active.classList.add('prev');
+            
+            currentPhoto++;
+            const next = document.querySelector(`.polaroid[data-id="${currentPhoto}"]`);
+            
+            if(next) {
+                next.classList.add('active');
+            }
+        }
+
+        // Mini Confetti Engine
+        function fireConfetti() {
+            const colors = ['#ff0000', '#ff69b4', '#ffd700', '#00ff00', '#00ffff', '#ff8fa3'];
+            const container = document.getElementById('app-container');
+            
+            for (let i = 0; i < 60; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                confetti.style.left = '50%';
+                confetti.style.top = '50%';
+                
+                const tx = (Math.random() - 0.5) * 400 + 'px';
+                const ty = (Math.random() - 0.5) * 400 + 'px';
+                
+                confetti.style.setProperty('--tx', tx);
+                confetti.style.setProperty('--ty', ty);
+                confetti.style.animationDuration = (Math.random() * 1 + 1) + 's';
+                
+                container.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+    </script>
+</body>
+</html>
