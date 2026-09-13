@@ -22,7 +22,6 @@
             color: #fff;
         }
 
-        /* App Container (Mobile Feel) */
         #app-container {
             width: 100vw; height: 100vh; height: 100dvh;
             max-width: 420px; 
@@ -80,23 +79,24 @@
         
         @keyframes flicker { 0% { transform: translateX(-50%) scale(0.9) rotate(-3deg); } 100% { transform: translateX(-50%) scale(1.1) rotate(3deg); } }
 
-        /* --- SCREEN 4: 15 PASSIONATE CARDS DECK --- */
+        /* --- SCREEN 4: 20 PASSIONATE CARDS DECK --- */
         .card-stack { position: relative; width: 280px; height: 380px; margin: 20px auto; perspective: 1000px; }
         .love-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #111, #2a0813); border: 1px solid #d4af37; padding: 30px 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.8); border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); cursor: pointer; transform-origin: bottom center; }
         
         .love-card p { font-size: 1.4rem; font-family: 'Dancing Script', cursive; color: #d4af37; line-height: 1.5; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
         .card-number { position: absolute; bottom: 15px; font-size: 0.8rem; color: #666; font-family: 'Quicksand', sans-serif; }
         
-        /* Swiping animation classes */
         .love-card.swiped { transform: translateY(-100px) rotate(-15deg) scale(0.8); opacity: 0; pointer-events: none; }
 
         /* --- SCREEN 5: FINAL LETTER --- */
         .paper { background: #0f0509; border: 1px solid #d4af37; padding: 35px 25px; border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); width: 95%; max-height: 80vh; overflow-y: auto; text-align: left; position: relative; }
         .paper::-webkit-scrollbar { display: none; }
-        .cursive { font-family: 'Dancing Script', cursive; color: #d4af37; font-size: 2.5rem; margin-bottom: 20px; text-shadow: 2px 2px 5px rgba(0,0,0,0.8); }
+        .cursive { font-family: 'Dancing Script', cursive; color: #d4af37; font-size: 2.2rem; margin-bottom: 20px; text-shadow: 2px 2px 5px rgba(0,0,0,0.8); }
         .paper p { margin-bottom: 18px; font-size: 1rem; line-height: 1.7; color: #e0e0e0; font-weight: 500; }
         .signature { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #d4af37; text-align: right; margin-top: 30px; }
         .sexy-highlight { color: #ff0844; font-weight: 700; font-style: italic; }
+        
+        .book-img { float: right; width: 90px; border-radius: 5px; margin-left: 15px; margin-bottom: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.6); border: 1px solid #d4af37; }
 
         /* Background Effects */
         .sparkle { position: absolute; background: #d4af37; border-radius: 50%; box-shadow: 0 0 10px #d4af37; animation: twinkle linear infinite; pointer-events: none; }
@@ -119,14 +119,15 @@
         <div class="screen active" id="screen-1">
             <div class="imessage">
                 <p class="msg-time">Today</p>
-                <div class="msg-bubble msg-them" style="animation-delay: 0.5s">Hey Komal...</div>
-                <div class="msg-bubble msg-them" style="animation-delay: 2.0s">I know we aren't officially dating right now.</div>
-                <div class="msg-bubble msg-me" style="animation-delay: 3.5s">Yeah... "officially." 😉</div>
-                <div class="msg-bubble msg-them" style="animation-delay: 5.0s">But it is your birthday.</div>
-                <div class="msg-bubble msg-me" style="animation-delay: 6.5s">And there's absolutely no way I'd let today pass without celebrating you properly.</div>
-                <div class="msg-bubble msg-me" style="animation-delay: 8.0s">Are you ready?</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 0.5s">Hey Komal...</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 2.0s">I know we aren't dating.</div>
+                <div class="msg-bubble msg-them" style="animation-delay: 3.5s">Yeah, neither officially nor unofficially. 😂</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 5.0s">True. But let's be completely real...</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 6.5s">The tension is there. And it is your birthday.</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 8.0s">And I couldn't let today pass without giving you something special.</div>
+                <div class="msg-bubble msg-me" style="animation-delay: 9.5s">Are you ready?</div>
                 
-                <button class="action-btn" id="start-btn" style="animation: popIn 0.5s ease backwards; animation-delay: 9.5s; align-self: center;" onclick="startExperience()">
+                <button class="action-btn" id="start-btn" style="animation: popIn 0.5s ease backwards; animation-delay: 11s; align-self: center;" onclick="startExperience()">
                     Tap to open your gift ⚡
                 </button>
             </div>
@@ -159,13 +160,13 @@
             </div>
         </div>
 
-        <!-- SCREEN 4: 15 Deck of Cards -->
+        <!-- SCREEN 4: 20 Deck of Cards -->
         <div class="screen" id="screen-4">
             <h2 class="prompt-text" style="font-size: 2rem; margin-bottom: 5px;">Birthday Notes ✨</h2>
             <p class="sub-prompt">Tap the cards to reveal...</p>
 
             <div class="card-stack" id="card-stack">
-                <!-- Cards will be generated by JS here so we keep the HTML clean -->
+                <!-- Cards generated by JS -->
             </div>
             
             <button class="action-btn" id="final-btn" style="display:none; position: absolute; bottom: 30px;" onclick="nextScreen()">Read my letter 💌</button>
@@ -174,12 +175,15 @@
         <!-- SCREEN 5: Handwritten Letter -->
         <div class="screen" id="screen-5">
             <div class="paper">
+                <!-- The physical book cover image is pulled right into the letter! -->
+                <img src="120196.jpg" alt="I Cannot Say Goodbye to You" class="book-img">
+                
                 <h2 class="cursive">To my Harry Potter,</h2>
-                <p>Happy Birthday to the girl with the round glasses who brings absolute magic into my ordinary world.</p>
-                <p>I know we aren’t officially dating right now, but let's be completely honest with each other on your special day. We both feel this insane, magnetic pull. You completely hijack my mind, and honestly? <span class="sexy-highlight">It’s incredibly sexy.</span> The way you look through those frames, the way you smile, the way you hold yourself... it drives me completely crazy.</p>
-                <p>I wanted to give you a gift today, but instead, I want to remind you of a promise. I have a timeline in my head, and you already know exactly what it is. <span class="sexy-highlight">6 years.</span> That is the countdown.</p>
-                <p>In 6 years, those beautiful round glasses are going to look absolutely breathtaking paired with a bridal lehenga. In 6 years, I’m making you mine forever. No excuses, no running away.</p>
-                <p>Enjoy your birthday, Komal. Celebrate yourself today. And until that 6-year timer runs out, keep doing your magic on me. I’m completely under your spell, and I never want to be set free.</p>
+                <p>I am giving you <i>"I Cannot Say Goodbye to You"</i> today, but the beautiful truth is, I never plan on saying goodbye to you anyway.</p>
+                <p>I know we aren’t dating—not officially, not even unofficially. But let's be honest about the magic between us. You completely hijack my mind, and honestly? <span class="sexy-highlight">It’s incredibly sexy.</span> The way you look through those round frames, the way you smile, the way you hold yourself... it drives me completely crazy.</p>
+                <p>I cannot stop thinking about Amritsar next month. Our first real, personal time together. Just you and me. I’ve been thinking about what that first hug is going to feel like, and exactly what is going to happen when I finally get to kiss you.</p>
+                <p>Enjoy your birthday, Komal. Celebrate yourself today. And keep that timeline in your head... <span class="sexy-highlight">6 years.</span> Because in 6 years, those beautiful glasses are going to be paired with a bridal lehenga, and I’m making you mine forever.</p>
+                <p>I’m completely under your spell, and I never want to be set free.</p>
                 
                 <p class="signature">Yours,<br>Sukhmanpreet</p>
             </div>
@@ -207,7 +211,6 @@
         }
         createSparkles();
 
-        // --- APP NAVIGATION ---
         function startExperience() {
             document.getElementById('bg-music').play().catch(e => console.log('Audio blocked', e));
             nextScreen();
@@ -219,7 +222,7 @@
             const nextEl = document.getElementById(`screen-${currentStep}`);
             if(nextEl) {
                 nextEl.classList.add('active');
-                if(currentStep === 4) initializeCards(); // Build the deck when we reach screen 4
+                if(currentStep === 4) initializeCards(); 
             }
         }
 
@@ -276,24 +279,28 @@
             setTimeout(() => nextScreen(), 2500);
         }
 
-        // --- SCREEN 4: THE 15 CARDS DECK ---
-        // UPDATED CONTENT: Birthday focused, romantic, and incorporating the magic/timeline
+        // --- SCREEN 4: 20 CARDS DECK ---
         const cardMessages = [
             "Happy Birthday to the girl in the round glasses...",
             "...the one who thinks she's just living a normal life...",
             "...while secretly casting a permanent spell on my mind.",
-            "I know we aren't officially 'dating' right now...",
-            "...but let's be honest, the chemistry is undeniable.",
+            "I know we aren't dating.",
+            "Not officially. Not even unofficially. 😂",
+            "But let's be completely honest with each other today.",
+            "The chemistry and tension between us? It's undeniably real.",
             "Every time I look at you, my heart does this crazy flip.",
             "And my mind goes to places I probably shouldn't say out loud... yet. 😉",
             "There is something wildly intoxicating about you.",
-            "The way you smile, the way you look through those frames...",
-            "...it drives me absolutely crazy.",
-            "You are my favorite kind of beautiful.",
-            "And my absolute favorite kind of danger.",
-            "So, celebrate yourself today, Harry Potter.",
-            "Because I still have that timeline in my head... 6 years.",
-            "In 6 years, I'm making you mine forever. Happy Birthday. ❤️"
+            "The way you look through those frames... it drives me absolutely crazy.",
+            "I'm giving you this book today because our story is my favorite.",
+            "But the chapter I'm looking forward to the most is next month.",
+            "Amritsar. Just you and me.",
+            "Our first real, personal time together.",
+            "I’ve been thinking about that first real hug...",
+            "...and exactly what it’s going to feel like when I finally kiss you.",
+            "You are my favorite kind of beautiful, and my absolute favorite kind of danger.",
+            "Celebrate yourself today, my Harry Potter.",
+            "Because the countdown is ticking... 6 years. ❤️"
         ];
 
         let topCardIndex = 0;
@@ -315,7 +322,7 @@
                 
                 card.innerHTML = `
                     <p>${cardMessages[i]}</p>
-                    <div class="card-number">${i + 1} / 15</div>
+                    <div class="card-number">${i + 1} / 20</div>
                 `;
                 
                 card.onclick = () => swipeCard(i);
